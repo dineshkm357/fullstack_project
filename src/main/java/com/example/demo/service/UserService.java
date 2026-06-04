@@ -16,6 +16,9 @@ public class UserService {
 @Autowired
 private UserRepository repo;
 
+@Autowired
+private MailService mail;
+
 
 
 public String register(
@@ -23,6 +26,12 @@ public String register(
 User user
 
 ){
+
+System.out.println(
+
+"REGISTER START"
+
+);
 
 if(
 
@@ -40,6 +49,8 @@ return
 }
 
 
+/* FORCE USER ROLE */
+
 user.setRole(
 
 "USER"
@@ -47,11 +58,57 @@ user.setRole(
 );
 
 
+/* SAVE */
+
+User saved=
+
 repo.save(
 
 user
 
 );
+
+System.out.println(
+
+"ROLE -> "
+
++
+
+saved.getRole()
+
+);
+
+
+/* SEND MAIL */
+
+try{
+
+mail.send(
+
+saved.getEmail(),
+
+saved.getName()
+
+);
+
+System.out.println(
+
+"MAIL SENT"
+
+);
+
+}
+
+catch(
+
+Exception e
+
+){
+
+e.printStackTrace();
+
+}
+
 
 return
 
@@ -69,7 +126,7 @@ String password
 
 ){
 
-Optional<User> db =
+Optional<User> db=
 
 repo.findByUsername(
 
@@ -87,7 +144,7 @@ return null;
 
 }
 
-User user =
+User user=
 
 db.get();
 
@@ -106,6 +163,9 @@ password
 return null;
 
 }
+
+
+/* RETURN ROLE */
 
 return
 

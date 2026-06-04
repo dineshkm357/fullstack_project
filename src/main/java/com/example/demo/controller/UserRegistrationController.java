@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.User;
 
-import com.example.demo.service.UserRegistrationService;
+import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserRegistrationController {
 
 @Autowired
-private UserRegistrationService service;
+private UserService service;
+
+
 
 @PostMapping(
 "/register"
@@ -30,8 +32,16 @@ User user
 
 ){
 
-return service.register(
+System.out.println(
+"CONTROLLER HIT"
+);
+
+return
+
+service.register(
+
 user
+
 );
 
 }
